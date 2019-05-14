@@ -9,6 +9,9 @@ LABEL com.github.actions.name="Prevent fixup! commits"
 LABEL com.github.actions.description="Prevents you from merging fixup! commits into master."
 LABEL com.github.actions.icon="package"
 LABEL com.github.actions.color="red"
+
+RUN apk add git
+
 COPY LICENSE README.md /
 
 COPY "entrypoint.sh" "/entrypoint.sh"
