@@ -9,10 +9,10 @@ An example workflow to prevent `fixup!` commits follows:
 ```hcl
 workflow "Validate Commit Messages" {
     on = "push"
-    resolves = "Prevent Fixup Commits
+    resolves = "Prevent Fixup Commits"
 }
 
 action "Prevent Fixup Commits" {
-    uses "ianwremmel/prevent-fixup-commits"
+    uses = "ianwremmel/prevent-fixup-commits@master"
 }
 ```
