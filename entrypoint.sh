@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-if [ "$(git log | grep -c 'fixup!')" == "0" ]; then 
+git fetch origin master
+
+if [ "$(git log "$(git merge-base HEAD origin/master)"..HEAD | grep -c 'fixup!')" -eq 0 ]; then 
     echo 'no fixup commits'
     exit 0  
 else
