@@ -13,6 +13,6 @@ workflow "Validate Commit Messages" {
 }
 
 action "Prevent Fixup Commits" {
-    uses = "ianwremmel/prevent-fixup-commits@master"
+    uses = "ianwremmel/prevent-fixup-commits@v1.0.0"
 }
 ```
