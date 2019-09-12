@@ -1,8 +1,7 @@
 on: push
-name: Validate Commit Messages
+name: Validate
 jobs:
-  build:
-    name: ianwremmel/prevent-fixup-commits@v1.0.0
+  fixup:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
