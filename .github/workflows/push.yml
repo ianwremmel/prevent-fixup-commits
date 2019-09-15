@@ -5,4 +5,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - uses: ianwremmel/prevent-fixup-commits@v1.0.0
+    - uses: ianwremmel/prevent-fixup-commits@v1.0.1
