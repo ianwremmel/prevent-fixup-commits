@@ -15,6 +15,7 @@ echo "Found merge base $MERGE_BASE."
 
 if [ "$MERGE_BASE" == "$GITHUB_SHA" ]; then
   echo "MERGE_BASE and GITHUB_SHA match. Exiting 0 as there are no commits to check."
+  exit 0
 fi
 
 echo 'Counting fixup! commits.'
