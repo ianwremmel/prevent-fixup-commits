@@ -4,5 +4,14 @@ jobs:
   fixup:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: ianwremmel/prevent-fixup-commits@v1.0.1
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - uses: ianwremmel/prevent-fixup-commits@master
+  nopush:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - uses: ianwremmel/prevent-nopush-commits@master
