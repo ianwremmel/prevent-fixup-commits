@@ -19,7 +19,9 @@ if [ "$MERGE_BASE" == "$GITHUB_SHA" ]; then
 fi
 
 echo 'Counting fixup! commits.'
+set +e
 COUNT="$(git log "$MERGE_BASE"..HEAD | grep -c 'fixup!')"
+set -e
 echo "Found $COUNT fixup! commits."
 
 if (( COUNT == 0 )); then 
