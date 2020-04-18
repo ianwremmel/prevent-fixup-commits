@@ -7,21 +7,25 @@ set -euo pipefail
 # SHA and doesn't bother with branch names?
 echo 'Fetching full repository from GitHub'
 git fetch > /dev/null 2> /dev/null
-echo 'Fetched full repository from GitHub'
+echo 'Fetched full repository from GitHub.'
 
 echo 'Computing merge base'
 MERGE_BASE=$(git merge-base HEAD origin/master)
-echo "Found merge base $MERGE_BASE"
+echo "Found merge base $MERGE_BASE."
 
-echo 'Counting fixup! commits'
+if [ "$MERGE_BASE" == "$GITHUB_SHA" ]; then
+  echo "MERGE_BASE and GITHUB_SHA match. Exiting 0 as there are no commits to check."
+fi
+
+echo 'Counting fixup! commits.'
 COUNT="$(git log "$MERGE_BASE"..HEAD | grep -c 'fixup!')"
-echo "Found $COUNT fixup! commits"
+echo "Found $COUNT fixup! commits."
 
 if (( COUNT == 0 )); then 
-    echo 'Did not find any fixup! commits. Exiting cleanly'
+    echo 'Did not find any fixup! commits. Exiting cleanly.'
     exit 0
 else
     echo 'Found fixup! commits. Failing workflow.'
-    echo 'Please use interactive rebase with --autosquach to squash commits'
+    echo 'Please use interactive rebase with --autosquach to squash commits.'
     exit 1
 fi
