@@ -1,0 +1,5 @@
+name: 'Prevent Fixup Commits'
+description: 'Prevents Fixup Commits'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
