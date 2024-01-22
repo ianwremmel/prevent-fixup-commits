@@ -16,7 +16,7 @@ MERGE_BASE=$(git merge-base HEAD origin/master)
 echo "Found merge base $MERGE_BASE."
 
 if [ "$MERGE_BASE" == "$GITHUB_SHA" ]; then
-  echo "MERGE_BASE and GITHUB_SHA match. Exiting 0 as there are no commits to check."
+  echo "MERGE_BASE and GITHUB_SHA match. Exiting 0 as there are no commits to check." | tee >> "$GITHUB_STEP_SUMMARY"
   exit 0
 fi
 
@@ -24,13 +24,13 @@ echo 'Counting fixup! commits.'
 set +e
 COUNT="$(git log "$MERGE_BASE"..HEAD | grep -c 'fixup!')"
 set -e
-echo "Found $COUNT fixup! commits."
+echo "Found $COUNT fixup! commits." 
 
 if (( COUNT == 0 )); then 
-    echo 'Did not find any fixup! commits. Exiting cleanly.'
+    echo 'Did not find any fixup! commits. Exiting cleanly.' | tee >> "$GITHUB_STEP_SUMMARY"
     exit 0
 else
-    echo 'Found fixup! commits. Failing workflow.'
-    echo 'Please use interactive rebase with --autosquach to squash commits.'
+    echo 'Found fixup! commits. Failing workflow.' | tee >> "$GITHUB_STEP_SUMMARY"
+    echo 'Please use interactive rebase with --autosquash to squash commits.' | tee >> "$GITHUB_STEP_SUMMARY"
     exit 1
 fi
