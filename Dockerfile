@@ -10,11 +10,7 @@ LABEL com.github.actions.description="Prevents you from merging fixup! commits i
 LABEL com.github.actions.icon="package"
 LABEL com.github.actions.color="red"
 
-RUN apk add git wget
-RUN wget https://github.com/cli/cli/releases/download/v2.42.1/gh_2.42.1_linux_amd64.tar.gz && \
-  tar -xvf gh_2.42.1_linux_amd64.tar.gz && \
-  mv gh_2.42.1_linux_amd64/bin/gh /usr/local/bin/gh && \
-  rm -rf gh_2.42.1_linux_amd64.tar.gz gh_2.42.1_linux_amd64
+RUN apk add git
 
 COPY LICENSE README.md /
 

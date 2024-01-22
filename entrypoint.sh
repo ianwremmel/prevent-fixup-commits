@@ -4,7 +4,7 @@ set -euo pipefail
 
 git config --global --add safe.directory '*'
 
-DEFAULT_BRANCH=$(gh repo view --json defaultBranchRef --jq .defaultBranchRef.name)
+DEFAULT_BRANCH=$(LC_ALL=C git remote show origin | sed -n '/HEAD branch/s/.*: //p')
 
 # for reasons I can't explain, we still need to `git fetch` even with 
 # `fetch-depth: 0`. Perhaps fetch depth only grabs the history of the current 
