@@ -6,5 +6,6 @@ branding:
 runs:
   using: 'composite'
   steps:
-    - run: ${{ github.action_path }}/entrypoint.sh
+    # github.action_path is the host path, which a job container can't see.
+    - run: "$GITHUB_ACTION_PATH/entrypoint.sh"
       shell: bash

@@ -25,13 +25,15 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    # Commit on top of HEAD~1 so the merge base never equals GITHUB_SHA,
-    # which would make the action exit early on pushes to master.
+    # Commit HEAD's tree on top of HEAD~1 so the merge base never equals
+    # GITHUB_SHA, which would make the action exit early on pushes to master.
+    # --soft keeps the working tree, so `uses: ./` still runs this revision.
     - name: add a fixup commit
       run: |
+        git config --global --add safe.directory "$GITHUB_WORKSPACE"
         git config user.name test
         git config user.email test@example.com
-        git reset --hard HEAD~1
+        git reset --soft HEAD~1
         git commit --allow-empty -m 'fixup! test'
     - name: self
       id: neg
