@@ -4,15 +4,49 @@ jobs:
   fixup:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: self
       uses: ./
+  container:
+    runs-on: ubuntu-latest
+    container: buildpack-deps:bookworm-scm
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: self
+      uses: ./
+  container-negative:
+    runs-on: ubuntu-latest
+    container: buildpack-deps:bookworm-scm
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    # Commit on top of HEAD~1 so the merge base never equals GITHUB_SHA,
+    # which would make the action exit early on pushes to master.
+    - name: add a fixup commit
+      run: |
+        git config user.name test
+        git config user.email test@example.com
+        git reset --hard HEAD~1
+        git commit --allow-empty -m 'fixup! test'
+    - name: self
+      id: neg
+      continue-on-error: true
+      uses: ./
+    - name: assert the action failed
+      run: |
+        if [ "${{ steps.neg.outcome }}" != failure ]; then
+          echo "expected failure, got ${{ steps.neg.outcome }}"
+          exit 1
+        fi
   nopush:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - uses: ianwremmel/prevent-nopush-commits@master
