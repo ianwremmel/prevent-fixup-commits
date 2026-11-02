@@ -1,5 +1,11 @@
 name: 'Prevent Fixup Commits'
 description: 'Prevents Fixup Commits'
+branding:
+  icon: 'package'
+  color: 'red'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: 'composite'
+  steps:
+    # github.action_path is the host path, which a job container can't see.
+    - run: "$GITHUB_ACTION_PATH/entrypoint.sh"
+      shell: bash
